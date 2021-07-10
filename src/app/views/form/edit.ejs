@@ -1,0 +1,63 @@
+<html>
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="/static/css/casadocodigo.css" />
+      <title>Listagem de livros</title>
+    </head>
+
+  <body>
+    <%- include("../partials/header") %> 
+
+    <main class="conteudoPrincipal">
+      <div class="container">
+        <h1>Cadastro de livros</h1>
+
+    <form action="/livros?_method=PUT" method="POST">
+
+      <input type="hidden" name="id" value="<%-book.id%>">
+
+      <div class="form-group">
+        <label for="titulo">Titulo:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="titulo"
+          name="titulo"
+          placeholder="coloque o titulo"
+          value="<%-book.titulo%>" />
+      </div>
+
+      <div class="form-group">
+        <label for="preco">Preço:</label>
+        <input
+          class="form-control"
+          type="text"
+          id="preco"
+          name="preco"
+          placeholder="150.25"
+          value="<%-book.preco%>"/>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição:</label>
+        <textarea
+          class="form-control"
+          cols="20"
+          rows="10"
+          id="descricao"
+          name="descricao"
+          placeholder="fale sobre o livro"
+        ></textarea>
+        </div>
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+      </div>
+    </main>
+  </form>
+
+    <%- include("../partials/footer") %> 
+  </body>
+</html>
