@@ -16,6 +16,14 @@
       <div class="container">
         <h1>Cadastro de livros</h1>
 
+        <% if (errors.length > 0) { %>
+          <% errors.forEach(error => { %>
+            <div class="alert alert-danger">
+              <%- error.param %> - <%- error.msg %>
+            </div>
+          <% }) %>
+        <% } %>
+
     <form action="/livros" method="POST">
       <div class="form-group">
         <label for="titulo">Titulo:</label>

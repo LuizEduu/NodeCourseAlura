@@ -4,6 +4,7 @@ const BookDao = require("../infra/BookDao");
 const express = require("express");
 const routes = express.Router();
 const path = require("path");
+const { body, validationResult } = require("express-validator");
 
 const viewsPath = path.resolve(__dirname, "..", "views");
 
@@ -24,8 +25,11 @@ routes.get("/books", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-routes.get("/books/form", (req, res) => {  
-    return res.render(`${viewsPath}/form/form.ejs`,)
+routes.get("/books/form", (req, res) => {
+
+  return res.render(`${viewsPath}/form/form.ejs`, {
+    errors: []
+  });
 });
 
 routes.get("/books/form/:id", (req, res) => {
@@ -38,18 +42,35 @@ routes.get("/books/form/:id", (req, res) => {
   });
 });
 
-routes.post("/livros", (req, res) => {
-  const { titulo, preco, descricao } = req.body;
+routes.post(
+  "/livros",
+  [body("titulo").isLength({ min: 5 })
+   .withMessage("O título precisa ter no mínimo 5 caracteres"),
+   body("preco").isCurrency()
+   .withMessage("O preço precisa ter um valor monetário válido")],
+  (req, res) => {
+    const { titulo, preco, descricao } = req.body;
 
-  const bookDao = new BookDao(db);
+    const errorsValidation = validationResult(req);
 
-  bookDao
-    .add(titulo, preco, descricao)
-    .then(() => {
-      return res.redirect("/books");
-    })
-    .catch((err) => console.log(err));
-});
+
+
+    
+    if (!errorsValidation.isEmpty()) {
+      return res.status(400).render(`${viewsPath}/form/form.ejs`, {
+        errors: errorsValidation.array()
+      });
+    }
+    const bookDao = new BookDao(db);
+
+    bookDao
+      .add(titulo, preco, descricao)
+      .then(() => {
+        return res.redirect("/books");
+      })
+      .catch((err) => console.log(err));
+  }
+);
 
 routes.delete("/livros/:id", (req, res) => {
   const { id } = req.params;
@@ -68,7 +89,6 @@ routes.put("/livros", (req, res) => {
   bookDao
     .findById(id)
     .then((book) => {
-
       const updatedBook = {
         id,
         titulo: titulo ? titulo : book.titulo,
