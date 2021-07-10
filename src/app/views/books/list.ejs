@@ -32,7 +32,7 @@
             <td><%=book.titulo %></td>
             <td><%=book.preco %></td>
             <td><a href="/books/form/<%-book.id %>">Editar</a></td> 
-            <td><a href="#" data-ref=<%-book.id %>  data-type="delete">Remover</a></td> 
+            <td><a href="#" data-ref=<%-book.id%>  data-type="delete">Remover</a></td> 
           </tr>
   
           <% }) %>
@@ -44,6 +44,6 @@
     <%- include("../partials/footer") %> 
     
 
-    <script src="/static/js/deleteBook.js"></script>
+    <script src="/static/js/remove-livro.js"></script>
   </body>
 </html>

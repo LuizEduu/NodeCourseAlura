@@ -24,6 +24,10 @@ routes.get("/books", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+routes.get("/books/form", (req, res) => {  
+    return res.render(`${viewsPath}/form/form.ejs`,)
+});
+
 routes.get("/books/form/:id", (req, res) => {
   const { id } = req.params;
 
@@ -59,10 +63,12 @@ routes.delete("/livros/:id", (req, res) => {
 
 routes.put("/livros", (req, res) => {
   const { id, titulo, preco, descricao } = req.body;
+  const bookDao = new BookDao(db);
 
-  new BookDao(db)
+  bookDao
     .findById(id)
     .then((book) => {
+
       const updatedBook = {
         id,
         titulo: titulo ? titulo : book.titulo,

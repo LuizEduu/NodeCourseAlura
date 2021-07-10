@@ -1,12 +1,13 @@
 const express = require("express");
 const routes = require("./routes");
 const bodyParser = require("body-parser");
-const cors = require("cors");
 const methodOverride = require("method-override");
 
-const app = express();
+const path = require("path");
 
-app.use(cors());
+const viewsPath = path.resolve(__dirname, "..", "views");
+
+const app = express();
 
 app.use("/static", express.static("src/app/public")); //configuração para arquivos estáticos
 
@@ -19,6 +20,7 @@ app.use(
 );
 
 app.use(methodOverride("_method"));
+
 
 app.use(routes);
 
