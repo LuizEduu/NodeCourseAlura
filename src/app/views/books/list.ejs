@@ -21,6 +21,7 @@
           <th>Id</th>
           <th>title</th>
           <th>Price</th>
+          <th>Detalhes</th>
           <th>Editar</th>
           <th>Remover</th>
         </thead>
@@ -31,6 +32,7 @@
             <td><%=book.id %></td>
             <td><%=book.titulo %></td>
             <td><%=book.preco %></td>
+            <td><a href="/books/details/<%-book.id%> ">Detalhes</a></td>
             <td><a href="/books/form/<%-book.id %>">Editar</a></td> 
             <td><a href="#" data-ref=<%-book.id%>  data-type="delete">Remover</a></td> 
           </tr>
